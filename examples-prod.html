@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ad Sonar Demo | Production mode</title>
+    <link href="./favicon.png" sizes="any" rel="shortcut icon" type="image/x-icon">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"/>
+    <meta name="robots" content="noindex, nofollow"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://static.sonartech.io/lib/1.0.0/sonar.js?appId=app_30923440"></script>
+    <link href="./css/sonar-demo.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="app">
+    <div class="content">
+        <div class="top">
+            <a href="./index.html" class="back-link">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="back-icon">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M14.7071 5.70711C14.3166 5.31658 13.6834 5.31658 13.2929 5.70711L7.63604 11.364C7.24551 11.7545 7.24551 12.3877 7.63604 12.7782L13.2929 18.435C13.6834 18.8256 14.3166 18.8256 14.7071 18.435C15.0976 18.0445 15.0976 17.4113 14.7071 17.0208L9.75736 12.0711L14.7071 7.12132C15.0976 6.7308 15.0976 6.09763 14.7071 5.70711Z" fill="currentColor"/>
+                </svg>
+                Back
+            </a>
+            <h1 class="page-title">AdSonar</h1>
+        </div>
+        <div class="examples">
+            <h3 class="subtitle"><b>Banner</b> 50 px height</h3>
+            <div id="banner_50" class="banner"></div>
+
+            <h3 class="subtitle"><b>Banner</b> 70 px height</h3>
+            <div id="banner_70" class="banner"></div>
+
+            <h3 class="subtitle"><b>Banner</b> adaptive will be below</h3>
+            <div id="banner_adaptive" class="banner banner-adaptive"></div>
+        </div>
+
+        <div class="buttons-wrap">
+            <button type="button" class="btn" id="banner_btn">Responsive Banner</button>
+            <button type="button" class="btn btn-hidden" id="banner_remove_btn" disabled>Remove Responsive Banner</button>
+            <button type="button" class="btn" id="rewarded_btn">Rewarded</button>
+            <button type="button" class="btn" id="interstitial_btn">Interstitial</button>
+        </div>
+    </div>
+</div>
+
+<script type="application/javascript">
+    if (window.Sonar) {
+        // Banners examples
+
+        // Static banners
+        // https://docs.adsonar.co/pages/en/code-integration/code-examples-banner-ad
+        window.Sonar.show({ adUnit: 'banner_50' });
+        window.Sonar.show({ adUnit: 'banner_70' });
+
+        // Show Banner by button click
+        const $showBannerBtn = document.getElementById('banner_btn');
+        const $removeBannerBtn = document.getElementById('banner_remove_btn');
+
+        if ($showBannerBtn && $removeBannerBtn) {
+            $showBannerBtn.addEventListener('click', () => {
+                $showBannerBtn.setAttribute('disabled', 'disabled');
+                $showBannerBtn.classList.add('btn-hidden');
+                $removeBannerBtn.classList.remove('btn-hidden');
+
+                window.Sonar.show({
+                    adUnit: 'banner_adaptive', // ad unit name from admin
+                    onShow: () => {
+                        $removeBannerBtn.removeAttribute('disabled');
+
+                    },
+                });
+            });
+
+            // Remove Banner by button click
+            $removeBannerBtn.addEventListener('click', () => {
+                $removeBannerBtn.setAttribute('disabled', 'disabled');
+
+                window.Sonar.remove({ adUnit: 'banner_adaptive' }).then((removeResult) => {
+                    if (removeResult?.status === 'removed') {
+                        $removeBannerBtn.classList.add('btn-hidden');
+                        $showBannerBtn.classList.remove('btn-hidden');
+                        $showBannerBtn.removeAttribute('disabled');
+                    }
+                });
+            });
+        }
+
+        // Rewarded example
+        // https://docs.adsonar.co/pages/en/code-integration/code-examples-rewarded-ad
+        const $rewardedBtn = document.getElementById('rewarded_btn');
+
+        if ($rewardedBtn) {
+            $rewardedBtn.addEventListener('click', () => {
+                $rewardedBtn.setAttribute('disabled', 'disabled');
+
+                window.Sonar.show({
+                    adUnit: 'rewarded', // ad unit name from admin
+                    onReward: () => {
+                        $rewardedBtn.removeAttribute('disabled');
+                    },
+                });
+            });
+        }
+
+        // Iterstitial example
+        // https://docs.adsonar.co/pages/en/code-integration/code-examples-interstitial-ad
+        const $interstitialBtn = document.getElementById('interstitial_btn');
+
+        if ($interstitialBtn) {
+            $interstitialBtn.addEventListener('click', () => {
+                $interstitialBtn.setAttribute('disabled', 'disabled');
+
+                window.Sonar.show({
+                    adUnit: 'interstitial', // ad unit name from admin
+                    onClose: () => {
+                        $interstitialBtn.removeAttribute('disabled');
+                    },
+                });
+            });
+        }
+    }
+
+</script>
+
+</body>
+</html>

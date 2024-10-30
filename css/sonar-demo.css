@@ -31,7 +31,7 @@ body {
     background-color: var(--base-bg-color);
     color: var(--base-text-color);
     font-family: var(--base-font-family);
-    font-size: 1.25rem;
+    font-size: 1rem;
     font-weight: 400;
     height: var(--full-height);
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -165,6 +165,7 @@ body {
     border-radius: 0.5rem;
     color: var(--button-text-color);
     display: block;
+    font-size: 1rem;
     line-height: 1.1;
     text-decoration: none;
     text-align: center;

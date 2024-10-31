@@ -52,7 +52,7 @@ body {
     flex-direction: column;
     justify-content: center;
     min-height: var(--full-height);
-    padding: 0.5rem var(--side-indent) 3rem;
+    padding: 1rem var(--side-indent) 3rem;
 }
 
 .text-wrap {
@@ -68,7 +68,7 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     flex-grow: 1;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .logo-link {
@@ -147,7 +147,7 @@ body {
 
 .banner-adaptive {
     flex-grow: 1;
-    min-height: 90px;
+    min-height: 80px;
 }
 
 .buttons-wrap {
@@ -179,4 +179,26 @@ body {
 
 .btn-hidden {
     display: none;
+}
+
+.loader {
+    background: var(--base-bg-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    padding: 0 var(--side-indent);
+}
+
+.loader-hidden {
+    display: none;
+}
+
+.loader-text {
+    color: var(--sonar-primary);
 }

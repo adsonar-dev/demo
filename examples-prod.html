@@ -19,7 +19,9 @@
         <div class="top">
             <a href="./index.html" class="back-link">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="back-icon">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M14.7071 5.70711C14.3166 5.31658 13.6834 5.31658 13.2929 5.70711L7.63604 11.364C7.24551 11.7545 7.24551 12.3877 7.63604 12.7782L13.2929 18.435C13.6834 18.8256 14.3166 18.8256 14.7071 18.435C15.0976 18.0445 15.0976 17.4113 14.7071 17.0208L9.75736 12.0711L14.7071 7.12132C15.0976 6.7308 15.0976 6.09763 14.7071 5.70711Z" fill="currentColor"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                          d="M14.7071 5.70711C14.3166 5.31658 13.6834 5.31658 13.2929 5.70711L7.63604 11.364C7.24551 11.7545 7.24551 12.3877 7.63604 12.7782L13.2929 18.435C13.6834 18.8256 14.3166 18.8256 14.7071 18.435C15.0976 18.0445 15.0976 17.4113 14.7071 17.0208L9.75736 12.0711L14.7071 7.12132C15.0976 6.7308 15.0976 6.09763 14.7071 5.70711Z"
+                          fill="currentColor"/>
                 </svg>
                 Back
             </a>
@@ -37,12 +39,16 @@
         </div>
 
         <div class="buttons-wrap">
-            <button type="button" class="btn" id="banner_btn">Responsive Banner</button>
-            <button type="button" class="btn btn-hidden" id="banner_remove_btn" disabled>Remove Responsive Banner</button>
+            <button type="button" class="btn" id="banner_btn">Adaptive Banner</button>
+            <button type="button" class="btn btn-hidden" id="banner_remove_btn" disabled>Remove Adaptive Banner</button>
             <button type="button" class="btn" id="rewarded_btn">Rewarded</button>
             <button type="button" class="btn" id="interstitial_btn">Interstitial</button>
         </div>
     </div>
+</div>
+
+<div class="loader loader-hidden" id="loader">
+    <p class="loader-text">Loading ads...</p>
 </div>
 
 <script type="application/javascript">
@@ -51,8 +57,8 @@
 
         // Static banners
         // https://docs.adsonar.co/pages/en/code-integration/code-examples-banner-ad
-        window.Sonar.show({ adUnit: 'banner_50' });
-        window.Sonar.show({ adUnit: 'banner_70' });
+        window.Sonar.show({adUnit: 'banner_50'});
+        window.Sonar.show({adUnit: 'banner_70'});
 
         // Show Banner by button click
         const $showBannerBtn = document.getElementById('banner_btn');
@@ -61,15 +67,21 @@
         if ($showBannerBtn && $removeBannerBtn) {
             $showBannerBtn.addEventListener('click', () => {
                 $showBannerBtn.setAttribute('disabled', 'disabled');
-                $showBannerBtn.classList.add('btn-hidden');
-                $removeBannerBtn.classList.remove('btn-hidden');
 
                 window.Sonar.show({
                     adUnit: 'banner_adaptive', // ad unit name from admin
                     onShow: () => {
                         $removeBannerBtn.removeAttribute('disabled');
-
+                        $removeBannerBtn.classList.remove('btn-hidden');
+                        $showBannerBtn.classList.add('btn-hidden');
                     },
+                }).then((showResult) => {
+                    if (showResult?.status === 'error') {
+                        $showBannerBtn.removeAttribute('disabled');
+                        $showBannerBtn.classList.remove('btn-hidden');
+                        $removeBannerBtn.classList.add('btn-hidden');
+                        alert('Banner didn\'t filled')
+                    }
                 });
             });
 
@@ -77,29 +89,36 @@
             $removeBannerBtn.addEventListener('click', () => {
                 $removeBannerBtn.setAttribute('disabled', 'disabled');
 
-                window.Sonar.remove({ adUnit: 'banner_adaptive' }).then((removeResult) => {
-                    if (removeResult?.status === 'removed') {
-                        $removeBannerBtn.classList.add('btn-hidden');
-                        $showBannerBtn.classList.remove('btn-hidden');
-                        $showBannerBtn.removeAttribute('disabled');
-                    }
+                window.Sonar.remove({adUnit: 'banner_adaptive'}).then((removeResult) => {
+                    $removeBannerBtn.classList.add('btn-hidden');
+                    $showBannerBtn.classList.remove('btn-hidden');
+                    $showBannerBtn.removeAttribute('disabled');
                 });
             });
         }
 
         // Rewarded example
         // https://docs.adsonar.co/pages/en/code-integration/code-examples-rewarded-ad
+        const $loader = document.getElementById('loader');
         const $rewardedBtn = document.getElementById('rewarded_btn');
 
-        if ($rewardedBtn) {
+        if ($rewardedBtn && $loader) {
             $rewardedBtn.addEventListener('click', () => {
                 $rewardedBtn.setAttribute('disabled', 'disabled');
+                $loader.classList.remove('loader-hidden');
 
                 window.Sonar.show({
                     adUnit: 'rewarded', // ad unit name from admin
                     onReward: () => {
                         $rewardedBtn.removeAttribute('disabled');
+                        $loader.classList.add('loader-hidden');
                     },
+                }).then((showResult) => {
+                    if (showResult?.status === 'error') {
+                        $rewardedBtn.removeAttribute('disabled');
+                        $loader.classList.add('loader-hidden');
+                        alert('Rewarded ads didn\'t filled');
+                    }
                 });
             });
         }
@@ -108,15 +127,23 @@
         // https://docs.adsonar.co/pages/en/code-integration/code-examples-interstitial-ad
         const $interstitialBtn = document.getElementById('interstitial_btn');
 
-        if ($interstitialBtn) {
+        if ($interstitialBtn && $loader) {
             $interstitialBtn.addEventListener('click', () => {
                 $interstitialBtn.setAttribute('disabled', 'disabled');
+                $loader.classList.remove('loader-hidden');
 
                 window.Sonar.show({
                     adUnit: 'interstitial', // ad unit name from admin
                     onClose: () => {
                         $interstitialBtn.removeAttribute('disabled');
+                        $loader.classList.add('loader-hidden');
                     },
+                }).then((showResult) => {
+                    if (showResult?.status === 'error') {
+                        $interstitialBtn.removeAttribute('disabled');
+                        $loader.classList.add('loader-hidden');
+                        alert('Interstitial ads didn\'t filled')
+                    }
                 });
             });
         }

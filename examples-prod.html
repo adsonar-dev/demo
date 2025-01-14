@@ -28,19 +28,20 @@
             <h1 class="page-title">AdSonar Production</h1>
         </div>
         <div class="examples">
-            <h3 class="subtitle"><b>Banner</b> 50 px height</h3>
+            <p class="text"><sup>*</sup>Production <b>Banners</b> for Demo App will be back soon. Let's see fullscreen <b>Interstitials</b> and <b>Rewards</b></p>
+            <!--<h3 class="subtitle"><b>Banner</b> 50 px height</h3>
             <div id="banner_50" class="banner banner-50"></div>
 
             <h3 class="subtitle"><b>Banner</b> 70 px height</h3>
             <div id="banner_70" class="banner banner-70"></div>
 
             <h3 class="subtitle"><b>Banner</b> adaptive will be below</h3>
-            <div id="banner_adaptive" class="banner banner-adaptive"></div>
+            <div id="banner_adaptive" class="banner banner-adaptive"></div>-->
         </div>
 
         <div class="buttons-wrap">
-            <button type="button" class="btn" id="banner_btn">Adaptive Banner</button>
-            <button type="button" class="btn btn-hidden" id="banner_remove_btn" disabled>Remove Adaptive Banner</button>
+            <!--<button type="button" class="btn" id="banner_btn">Adaptive Banner</button>
+            <button type="button" class="btn btn-hidden" id="banner_remove_btn" disabled>Remove Adaptive Banner</button>-->
             <button type="button" class="btn" id="rewarded_btn">Rewarded</button>
             <button type="button" class="btn" id="interstitial_btn">Interstitial</button>
         </div>
@@ -53,45 +54,45 @@
 
         // Static banners
         // https://docs.adsonar.co/pages/en/code-integration/code-examples-banner-ad
-        window.Sonar.show({adUnit: 'banner_50'});
-        window.Sonar.show({adUnit: 'banner_70'});
+        // window.Sonar.show({adUnit: 'banner_50'});
+        // window.Sonar.show({adUnit: 'banner_70'});
 
         // Show Banner by button click
-        const $showBannerBtn = document.getElementById('banner_btn');
-        const $removeBannerBtn = document.getElementById('banner_remove_btn');
+        // const $showBannerBtn = document.getElementById('banner_btn');
+        // const $removeBannerBtn = document.getElementById('banner_remove_btn');
 
-        if ($showBannerBtn && $removeBannerBtn) {
-            $showBannerBtn.addEventListener('click', () => {
-                $showBannerBtn.setAttribute('disabled', 'disabled');
-
-                window.Sonar.show({
-                    adUnit: 'banner_adaptive', // ad unit name from admin
-                    onShow: () => {
-                        $removeBannerBtn.removeAttribute('disabled');
-                        $removeBannerBtn.classList.remove('btn-hidden');
-                        $showBannerBtn.classList.add('btn-hidden');
-                    },
-                }).then((showResult) => {
-                    if (showResult?.status === 'error') {
-                        $showBannerBtn.removeAttribute('disabled');
-                        $showBannerBtn.classList.remove('btn-hidden');
-                        $removeBannerBtn.classList.add('btn-hidden');
-                        alert('Banner didn\'t filled')
-                    }
-                });
-            });
-
-            // Remove Banner by button click
-            $removeBannerBtn.addEventListener('click', () => {
-                $removeBannerBtn.setAttribute('disabled', 'disabled');
-
-                window.Sonar.remove({adUnit: 'banner_adaptive'}).then((removeResult) => {
-                    $removeBannerBtn.classList.add('btn-hidden');
-                    $showBannerBtn.classList.remove('btn-hidden');
-                    $showBannerBtn.removeAttribute('disabled');
-                });
-            });
-        }
+        // if ($showBannerBtn && $removeBannerBtn) {
+        //     $showBannerBtn.addEventListener('click', () => {
+        //         $showBannerBtn.setAttribute('disabled', 'disabled');
+        //
+        //         window.Sonar.show({
+        //             adUnit: 'banner_adaptive', // ad unit name from admin
+        //             onShow: () => {
+        //                 $removeBannerBtn.removeAttribute('disabled');
+        //                 $removeBannerBtn.classList.remove('btn-hidden');
+        //                 $showBannerBtn.classList.add('btn-hidden');
+        //             },
+        //         }).then((showResult) => {
+        //             if (showResult?.status === 'error') {
+        //                 $showBannerBtn.removeAttribute('disabled');
+        //                 $showBannerBtn.classList.remove('btn-hidden');
+        //                 $removeBannerBtn.classList.add('btn-hidden');
+        //                 alert('Banner didn\'t filled')
+        //             }
+        //         });
+        //     });
+        //
+        //     // Remove Banner by button click
+        //     $removeBannerBtn.addEventListener('click', () => {
+        //         $removeBannerBtn.setAttribute('disabled', 'disabled');
+        //
+        //         window.Sonar.remove({adUnit: 'banner_adaptive'}).then((removeResult) => {
+        //             $removeBannerBtn.classList.add('btn-hidden');
+        //             $showBannerBtn.classList.remove('btn-hidden');
+        //             $showBannerBtn.removeAttribute('disabled');
+        //         });
+        //     });
+        // }
 
         // Rewarded example
         // https://docs.adsonar.co/pages/en/code-integration/code-examples-rewarded-ad

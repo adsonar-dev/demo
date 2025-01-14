@@ -47,10 +47,6 @@
     </div>
 </div>
 
-<div class="loader loader-hidden" id="loader">
-    <p class="loader-text">Loading ads...</p>
-</div>
-
 <script type="application/javascript">
     if (window.Sonar) {
         // Banners examples
@@ -99,24 +95,20 @@
 
         // Rewarded example
         // https://docs.adsonar.co/pages/en/code-integration/code-examples-rewarded-ad
-        const $loader = document.getElementById('loader');
         const $rewardedBtn = document.getElementById('rewarded_btn');
 
-        if ($rewardedBtn && $loader) {
+        if ($rewardedBtn) {
             $rewardedBtn.addEventListener('click', () => {
                 $rewardedBtn.setAttribute('disabled', 'disabled');
-                $loader.classList.remove('loader-hidden');
 
                 window.Sonar.show({
                     adUnit: 'rewarded', // ad unit name from admin
                     onReward: () => {
                         $rewardedBtn.removeAttribute('disabled');
-                        $loader.classList.add('loader-hidden');
                     },
                 }).then((showResult) => {
                     if (showResult?.status === 'error') {
                         $rewardedBtn.removeAttribute('disabled');
-                        $loader.classList.add('loader-hidden');
                         alert('Rewarded ads didn\'t filled');
                     }
                 });
@@ -127,21 +119,18 @@
         // https://docs.adsonar.co/pages/en/code-integration/code-examples-interstitial-ad
         const $interstitialBtn = document.getElementById('interstitial_btn');
 
-        if ($interstitialBtn && $loader) {
+        if ($interstitialBtn) {
             $interstitialBtn.addEventListener('click', () => {
                 $interstitialBtn.setAttribute('disabled', 'disabled');
-                $loader.classList.remove('loader-hidden');
 
                 window.Sonar.show({
                     adUnit: 'interstitial', // ad unit name from admin
                     onClose: () => {
                         $interstitialBtn.removeAttribute('disabled');
-                        $loader.classList.add('loader-hidden');
                     },
                 }).then((showResult) => {
                     if (showResult?.status === 'error') {
                         $interstitialBtn.removeAttribute('disabled');
-                        $loader.classList.add('loader-hidden');
                         alert('Interstitial ads didn\'t filled');
                     }
                 });

@@ -75,6 +75,7 @@ body {
     align-self: center;
     display: block;
     text-decoration: none;
+    margin-bottom: 14px;
 }
 
 .logo {
@@ -179,27 +180,4 @@ body {
 
 .btn-hidden {
     display: none;
-}
-
-.loader {
-    background: var(--base-bg-color);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    z-index: 1;
-    padding: 0 var(--side-indent);
-}
-
-.loader-hidden {
-    display: none;
-}
-
-.loader-text {
-    color: var(--sonar-primary);
 }
